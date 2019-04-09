@@ -60,14 +60,14 @@ var _ = Describe("GitStore", func() {
 		})
 
 		It("Should be able to count all files without error.", func() {
-			files, err := repo.GetAllFiles("", true)
+			files, err := repo.GetAllFiles("", true, false)
 			Expect(err).ToNot(HaveOccurred())
 			Expect(files).To(HaveLen(9))
 		})
 
 		Context("with symlinks enabled", func() {
 			It("Should be able to count all files without error.", func() {
-				files, err := repo.GetAllFiles("", false)
+				files, err := repo.GetAllFiles("", false, false)
 				Expect(err).ToNot(HaveOccurred())
 				Expect(files).To(HaveLen(11))
 			})
@@ -79,7 +79,7 @@ var _ = Describe("GitStore", func() {
 		})
 
 		It("Should be able to fetch CHANGELOG file from map", func() {
-			files, err := repo.GetAllFiles("", true)
+			files, err := repo.GetAllFiles("", true, false)
 			Expect(err).ToNot(HaveOccurred())
 			changelog, ok := files["CHANGELOG"]
 			Expect(ok).To(BeTrue())
@@ -126,7 +126,7 @@ var _ = Describe("GitStore", func() {
 			})
 
 			It("Should be able to read the vendor/foo.go file", func() {
-				files, err := repo.GetAllFiles("", true)
+				files, err := repo.GetAllFiles("", true, false)
 				Expect(err).ToNot(HaveOccurred())
 				foo, ok := files["vendor/foo.go"]
 				Expect(ok).To(BeTrue())
@@ -143,7 +143,7 @@ var _ = Describe("GitStore", func() {
 
 			var findsFiles = func(path string, count int) {
 				It(fmt.Sprintf("Finds %d files inside path %s", count, path), func() {
-					files, err := repo.GetAllFiles(path, true)
+					files, err := repo.GetAllFiles(path, true, false)
 					Expect(err).ToNot(HaveOccurred())
 					Expect(files).To(HaveLen(count))
 				})
@@ -158,3 +158,4 @@ var _ = Describe("GitStore", func() {
 
 	})
 })
+
